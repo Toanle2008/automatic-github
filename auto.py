@@ -1,9 +1,8 @@
 import pyautogui as auto
 from time import sleep
 
-message = open("chatMessage.INP", "r")
 auto.hotkey('win','d')
-auto.prompt(text="",title="toanle")
+text = auto.prompt(text="",title="toanle")
 
 messenger_icon = r"C:\Users\wibun\OneDrive\Desktop\code\Img\messenger.png"
 ny_icon = r"C:\Users\wibun\OneDrive\Desktop\code\Img\ny.png"
@@ -22,7 +21,7 @@ chat = auto.locateCenterOnScreen(chat_icon, confidence=0.8)
 auto.moveTo(chat, duration=1)
 auto.click(chat)
 sleep(1)
-auto.write("{}".format(message.readline()))
+auto.write(text)
 sleep(2)
 send = auto.locateCenterOnScreen(send_icon, confidence=0.9)
 auto.moveTo(send, duration=1)
