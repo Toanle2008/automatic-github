@@ -2,6 +2,7 @@ import pyautogui as auto
 from time import sleep
 
 message = open("chatMessage.INP", "r")
+auto.hotkey('win','d')
 auto.prompt(text="",title="toanle")
 
 messenger_icon = r"C:\Users\wibun\OneDrive\Desktop\code\Img\messenger.png"
