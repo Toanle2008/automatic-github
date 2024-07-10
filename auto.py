@@ -5,10 +5,6 @@ message = open("chatMessage.INP", "r")
 auto.hotkey('win','d')
 auto.prompt(text="",title="toanle")
 
-<<<<<<< HEAD
-auto.hotkey('win','d')
-# 
-=======
 messenger_icon = r"C:\Users\wibun\OneDrive\Desktop\code\Img\messenger.png"
 ny_icon = r"C:\Users\wibun\OneDrive\Desktop\code\Img\ny.png"
 chat_icon = r"C:\Users\wibun\OneDrive\Desktop\code\Img\chatMessage.png"
@@ -22,7 +18,7 @@ ny = auto.locateCenterOnScreen(ny_icon, confidence=0.9)
 auto.moveTo(ny, duration=1)
 auto.click(ny)
 sleep(1.5)
-chat = auto.locateCenterOnScreen(chat_icon, confidence=0.9)
+chat = auto.locateCenterOnScreen(chat_icon, confidence=0.8)
 auto.moveTo(chat, duration=1)
 auto.click(chat)
 sleep(1)
@@ -31,4 +27,3 @@ sleep(1)
 send = auto.locateCenterOnScreen(send_icon, confidence=0.9)
 auto.moveTo(send, duration=1)
 auto.click(send)
->>>>>>> 314333dacc593c1a39716a473d61cceef4ea2250
