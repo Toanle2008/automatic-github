@@ -12,7 +12,7 @@ Path = {
     "breedMountain" : r"Img\dragonCity\breedMountain.png",
     "reBreed" : r"Img\dragonCity\reBreed.png",
     "breed" : r"Img\dragonCity\breed.png",
-    "xDeleteRedBreed" : r"Img\dragonCity\xdeleteRedBreed.png",
+    "xDeleteRedBreed" : r"Img\dragonCity\xDeleteRedBreed.png",
     "foodIcon" : r"Img\dragonCity\foodIcon.png",  
     "foodHouse" : r"Img\dragonCity\foodHouse.png",  
     "reGrow" : r"Img\dragonCity\reGrow.png",
@@ -26,7 +26,6 @@ Path = {
 }
 
 def find(objParam):
-    
     try:
         objectPos = auto.locateCenterOnScreen(Path[objParam], confidence=0.7)
         return objectPos
@@ -101,8 +100,11 @@ class dragonTools:
             sleep(0.25)
                 
         return
-         
+              
+    def hatchEggTool(numOfLoops):
+        pass     
 for numOfLoops in range(50): 
     pass
     # dragonTools.collectFoodTool(numOfLoops)yfy
     # dragonTools.breedingTool(numOfLoops)
+    #
