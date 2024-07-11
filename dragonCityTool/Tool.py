@@ -76,7 +76,7 @@ class dragonTools:
         sleep(31)
         
         while foodIconPos:
-            action(foodIcon, 0.5)    
+            action("foodIcon", 0.5)    
             foodIconPos = find("foodIcon", 0)
             
         return
