@@ -75,13 +75,10 @@ class dragonTools:
         action("reGrow", 0.5)
         sleep(31)
         
-        foodIconPos = find("foodIcon", 0)
         while foodIconPos:
-            auto.moveTo(foodIconPos, duration=0.25)
-            auto.click()  
-            sleep(0.5)
+            action(foodIcon, 0.5)    
             foodIconPos = find("foodIcon", 0)
-                
+            
         return
               
     def hatchEggTool(numOfLoops, myText, myTitle):
