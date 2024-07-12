@@ -10,6 +10,7 @@ from time import sleep
 #     user.join() 
 Path = {
     "breedMountain" : r"Img\dragonCity\breedMountain.png",
+    "breedMountainTree" : r"Img\dragonCity\breedMountainTree.png",
     "reBreed" : r"Img\dragonCity\reBreed.png",
     "breed" : r"Img\dragonCity\breed.png",
     "xDeleteRedBreed" : r"Img\dragonCity\xDeleteRedBreed.png",
@@ -27,6 +28,10 @@ Path = {
     "teeraHabitat" : r"Img\dragonCity\teeraHabitat.png",
     "teeraDragonInHabitat" : r"Img\dragonCity\teeraDragonInHabitat.png",
     "placeEgg" : r"Img\dragonCity\placeEgg.png",
+    "getEgg" : r"Img\dragonCity\getEgg.png",
+    "goldStore" : r"Img\dragonCity\goldStore.png",
+    "teeraDragon" : r"Img\dragonCity\teeraDragon.png",
+    "buyTeeraEgg" : r"Img\dragonCity\buyTeeraEgg.png",
     
 }
 
@@ -34,14 +39,16 @@ auto.PAUSE = 1
 
 def find(objParam, stack):
     try:
-        objectPos = auto.locateCenterOnScreen(Path[objParam], confidence=0.8)
+        objectPos = auto.locateCenterOnScreen(Path[objParam], confidence=0.7)
         return objectPos
     except auto.ImageNotFoundException:
-        if stack < 3:    
+        if stack < 4:    
             print("{} img not found".format(objParam))
+            sleep(0.5)
             find(objParam, stack+1)
         else:
             return False
+        
 def myPrompt(numOfLoops, myText, myTitle):
     global quantity
     if numOfLoops == 0:  
@@ -56,7 +63,7 @@ def action(object, duration):
 class dragonTools:
     def breedingTool(numOfLoops, myText, myTitle):
         myPrompt(numOfLoops, myText, myTitle)
-        action("breedMountain", 0.5)
+        action("breedMountainTree", 0.5)
         action("reBreed", 0.5)
         action("breed", 0.5)
         action("xDeleteRed", 0.5)
@@ -64,21 +71,24 @@ class dragonTools:
         action("hatchEgg", 0.5)
         action("sellDragon", 0.5)
         action("sellEgg", 0.5)
-        action("collectBreed", 0.5)
+        sleep(1)
+        action("breedMountainTree", 0.5)
       
-        
         return    
         
     def collectFoodTool(numOfLoops, myText, myTitle):
         myPrompt(numOfLoops, myText, myTitle)
         action("foodHouse", 0.5)
         action("reGrow", 0.5)
-        sleep(31)
+        sleep(30)
+        auto.PAUSE = 0
+        foodIconPos = True
         
         while foodIconPos:
             action("foodIcon", 0.5)    
             foodIconPos = find("foodIcon", 0)
             
+        auto.PAUSE = 1
         return
               
     def hatchEggTool(numOfLoops, myText, myTitle):
@@ -89,7 +99,7 @@ class dragonTools:
             action("placeEgg", 0.5)
             action("teeraHabitat", 0.5)
             action("teeraDragonInHabitat", 0.5)
-            action("sellDragon", 0.5)
+            action("sellEgg", 0.5)
             action("sellEgg", 0.5)
         for _ in range(int(quantity)):
             action("hatchMountain", 0.5)
@@ -97,11 +107,11 @@ class dragonTools:
             action("goldStore", 0.5)
             action("teeraDragon", 0.5)
             action("buyTeeraEgg", 0.5)
-        sleep(17)    
+        sleep(12)    
 
     def breedHatchTool(numOfLoops, myText, myTitle):
         myPrompt(numOfLoops, myText, myTitle)
-        action("breedMountain", 0.5)
+        action("breedMountainTree", 0.5)
         action("reBreed", 0.5)
         action("breed", 0.5)
         action("xDeleteRed", 0.5)
@@ -110,11 +120,14 @@ class dragonTools:
         action("placeEgg", 0.5)
         action("teeraHabitat", 0.5)
         action("teeraDragonInHabitat", 0.5)
-        action("sellDragon", 0.5)
         action("sellEgg", 0.5)
-        
+        action("sellEgg", 0.5)
+        action("breedMountainTree", 0.5)
+        sleep(3)        
+        return
 for numOfLoops in range(50): 
     pass
     # dragonTools.collectFoodTool(numOfLoops, "Enter to start...", "COLLECT FOOD TOOL")
-    # dragonTools.breedingTool(numOfLoops, "Enter to start...", "BREEDING TOOL")
-    dragonTools.hatchEggTool(numOfLoops, "Enter the num of Eggs to start...", "HATCHING TOOL")
+    dragonTools.breedingTool(numOfLoops, "Enter to start...", "BREEDING TOOL")
+    # dragonTools.hatchEggTool(numOfLoops, "Enter the num of Eggs to start...", "HATCHING TOOL")
+    # dragonTools.breedHatchTool(numOfLoops, "Enter to start...", "BREEDING AND HATCHING TOOL")
