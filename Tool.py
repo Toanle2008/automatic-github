@@ -132,21 +132,33 @@ print(
     Enter 2: breedingTool
     Enter 3: hatchEggTool
     Enter 4: breedHatchTool
+    
         '''
 )
 
-def run(choose):
-    Tools = {
-        "1" : dragonTools.collectFoodTool(numOfLoops, "Enter to start...", "COLLECT FOOD TOOL"),
-        "2" : dragonTools.breedingTool(numOfLoops, "Enter to start...", "BREEDING TOOL"),
-        "3" : dragonTools.hatchEggTool(numOfLoops, "Enter the num of Eggs to start...", "HATCHING TOOL"),
-        "4" : dragonTools.breedHatchTool(numOfLoops, "Enter to start...", "BREEDING AND HATCHING TOOL"),
-        }
-    for numOfLoops in range(50):
-        Tools["{}".format(choose)]
-        
-choose = input("Enter: ")    
-run(choose)
-
-
+def run():
+    choose = input("Enter: ")    
+    try:
+        choose = int(choose)
+        if not (1 <= choose <= 4):
+            print("Try again...")
+            run()
+    except ValueError:
+        print("Try again...")
+        run()
     
+    match choose:
+        case 1:
+            for numOfLoops in range(50):
+                dragonTools.collectFoodTool(numOfLoops, "Enter to start...", "COLLECT FOOD TOOL")
+        case 2:
+            for numOfLoops in range(50):
+                dragonTools.breedingTool(numOfLoops, "Enter to start...", "BREEDING TOOL")
+        case 3:
+            for numOfLoops in range(50):
+                dragonTools.hatchEggTool(numOfLoops, "Enter the num of Eggs to start...", "HATCHING TOOL")    
+        case 4:
+            for numOfLoops in range(50):
+                dragonTools.breedHatchTool(numOfLoops, "Enter to start...", "BREEDING AND HATCHING TOOL")  
+     
+run()
