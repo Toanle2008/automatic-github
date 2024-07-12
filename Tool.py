@@ -135,19 +135,18 @@ print(
         '''
 )
 
-def tools(choose):
+def run(choose):
     Tools = {
         "1" : dragonTools.collectFoodTool(numOfLoops, "Enter to start...", "COLLECT FOOD TOOL"),
         "2" : dragonTools.breedingTool(numOfLoops, "Enter to start...", "BREEDING TOOL"),
         "3" : dragonTools.hatchEggTool(numOfLoops, "Enter the num of Eggs to start...", "HATCHING TOOL"),
         "4" : dragonTools.breedHatchTool(numOfLoops, "Enter to start...", "BREEDING AND HATCHING TOOL"),
         }
-    return Tools["{}".format(choose)]
+    for numOfLoops in range(50):
+        Tools["{}".format(choose)]
+        
 choose = input("Enter: ")    
- 
-for numOfLoops in range(50):
-    tools(choose)
-    
+run(choose)
 
 
     
