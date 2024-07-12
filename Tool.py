@@ -122,7 +122,7 @@ class dragonTools:
         action("teeraDragonInHabitat", 0.5)
         action("sellEgg", 0.5)
         action("sellEgg", 0.5)
-        action("breedMountainToolree", 0.5)
+        action("breedMountainTree", 0.5)
         sleep(3)        
         return
 
