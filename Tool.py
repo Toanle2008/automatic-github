@@ -122,12 +122,32 @@ class dragonTools:
         action("teeraDragonInHabitat", 0.5)
         action("sellEgg", 0.5)
         action("sellEgg", 0.5)
-        action("breedMountainTree", 0.5)
+        action("breedMountainToolree", 0.5)
         sleep(3)        
         return
-for numOfLoops in range(50): 
-    pass
-    # dragonTools.collectFoodTool(numOfLoops, "Enter to start...", "COLLECT FOOD TOOL")
-    dragonTools.breedingTool(numOfLoops, "Enter to start...", "BREEDING TOOL")
-    # dragonTools.hatchEggTool(numOfLoops, "Enter the num of Eggs to start...", "HATCHING TOOL")
-    # dragonTools.breedHatchTool(numOfLoops, "Enter to start...", "BREEDING AND HATCHING TOOL")
+
+print(
+    ''' 
+    Enter 1: collectFoodTool
+    Enter 2: breedingTool
+    Enter 3: hatchEggTool
+    Enter 4: breedHatchTool
+        '''
+)
+
+def tools(choose):
+    Tools = {
+        "1" : dragonTools.collectFoodTool(numOfLoops, "Enter to start...", "COLLECT FOOD TOOL"),
+        "2" : dragonTools.breedingTool(numOfLoops, "Enter to start...", "BREEDING TOOL"),
+        "3" : dragonTools.hatchEggTool(numOfLoops, "Enter the num of Eggs to start...", "HATCHING TOOL"),
+        "4" : dragonTools.breedHatchTool(numOfLoops, "Enter to start...", "BREEDING AND HATCHING TOOL"),
+        }
+    return Tools["{}".format(choose)]
+choose = input("Enter: ")    
+ 
+for numOfLoops in range(50):
+    tools(choose)
+    
+
+
+    
