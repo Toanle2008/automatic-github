@@ -7,39 +7,42 @@ Path = {
     "breedMountainTree" : r"Img\dragonCity\breedMountainTree.png",
     "foodIcon" : r"Img\dragonCity\foodIcon.png",  
     "foodHouse" : r"Img\dragonCity\foodHouse.png",  
-    "collectBreed" : r"Img\dragonCity\collectBreed.png",
     "hatchEgg" : r"Img\dragonCity\hatchEgg.png",
     "hatchMountain" : r"Img\dragonCity\hatchMountain.png",
-    "collectBreed" : r"Img\dragonCity\collectBreed.png",
     "teeraHabitat" : r"Img\dragonCity\teeraHabitat.png",
     "teeraDragonInHabitat" : r"Img\dragonCity\teeraDragonInHabitat.png",
     "getEgg" : r"Img\dragonCity\getEgg.png",
+    "reGrow" : r"Img\dragonCity\reGrow.png",
     
 }
 
 hardPath = {
-    "reBreed" :     (937, 686),
-    "breed" :       (670, 596),
-    "xDeleteRed" :  (1290, 77),
-    "reGrow" :      (687, 700),
-    "sellEgg" :     (943, 552),
-    "sellEgg2" :    (783, 559),
-    "sellDragon" :  (1170, 711),
-    "sellDragon2" : (778, 543),
-    "goldStore" :   (872, 728),
-    "buyTeeraEgg" : (204, 605),
-    "placeEgg" :    (750, 547),
+    "reBreed":     (937, 686),
+    "breed":       (670, 596),
+    "xDeleteRed":  (1290, 77),
+    "reGrow":      (687, 700),
+    "sellEgg":     (943, 552),
+    "sellEgg2":    (783, 559),
+    "sellDragon":  (1170, 711),
+    "sellDragon2": (778, 543),
+    "goldStore":   (872, 728),
+    "buyTeeraEgg": (204, 605),
+    "placeEgg":    (750, 547),
 
 }
+
 auto.PAUSE = 1
+num = 1
 
 def find(objParam, stack):
+    global num
     try:
         objectPos = auto.locateCenterOnScreen(Path[objParam], confidence=0.7)
         return objectPos
     except auto.ImageNotFoundException:
         if stack < 3:    
-            print("{} img not found".format(objParam))
+            print("sorry Master. I can't find {} x {}".format(objParam, num))
+            num += 1
             sleep(1)
             find(objParam, stack+1)
         else:
@@ -64,6 +67,7 @@ def shortAction(object, duration):
 def againAction(position, duration):
     auto.moveTo(position, duration=duration)
     auto.click()
+
 class dragonTools:
     def breedingTool(numOfLoops, myText, myTitle):
         myPrompt(numOfLoops, myText, myTitle)
@@ -85,14 +89,26 @@ class dragonTools:
         action("foodHouse", 0.5)
         shortAction("reGrow", 0.5)
         sleep(31)
-        auto.PAUSE = 0
-        foodIconPos = True
-        
-        while foodIconPos:
-            action("foodIcon", 0.5)    
-            foodIconPos = find("foodIcon", 0)
+                
+        def collectFood(pause):
+            auto.PAUSE = pause
+            foodIconPos = True
             
+            while foodIconPos:
+                action("foodIcon", 0.5)    
+                foodIconPos = find("foodIcon", 0)
+                
+        collectFood(0)    
         auto.PAUSE = 1
+    
+        for _ in range(50):
+            if find("reGrow", 0):
+                shortAction("reGrow", 0.5)
+                sleep(30)
+                collectFood(0)    
+            else:
+                break
+        auto.PAUSE = 1    
         return
               
     def hatchEggTool(numOfLoops, myText, myTitle):
@@ -134,8 +150,7 @@ print(
     Enter 1: collectFoodTool
     Enter 2: breedingTool
     Enter 3: hatchEggTool
-    Enter 4: breedHatchTool
-    
+    Enter 4: breedHatchTool   
         '''
 )
 
