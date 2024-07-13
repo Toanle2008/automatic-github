@@ -1,40 +1,36 @@
-# from pynput.keyboard import Listener
 import pyautogui as auto
 from time import sleep
 
-# def anonymous(key):
-#     if str(key) == "Key.esc":
-#         raise SystemExit(0)
-    
-# with Listener(on_press=anonymous) as user:
-#     user.join() 
+
 Path = {
     "breedMountain" : r"Img\dragonCity\breedMountain.png",
     "breedMountainTree" : r"Img\dragonCity\breedMountainTree.png",
-    "reBreed" : r"Img\dragonCity\reBreed.png",
-    "breed" : r"Img\dragonCity\breed.png",
-    "xDeleteRedBreed" : r"Img\dragonCity\xDeleteRedBreed.png",
     "foodIcon" : r"Img\dragonCity\foodIcon.png",  
     "foodHouse" : r"Img\dragonCity\foodHouse.png",  
-    "reGrow" : r"Img\dragonCity\reGrow.png",
     "collectBreed" : r"Img\dragonCity\collectBreed.png",
     "hatchEgg" : r"Img\dragonCity\hatchEgg.png",
-    "sellEgg" : r"Img\dragonCity\sellEgg.png",
-    "sellDragon" : r"Img\dragonCity\sellDragon.png",
     "hatchMountain" : r"Img\dragonCity\hatchMountain.png",
     "collectBreed" : r"Img\dragonCity\collectBreed.png",
-    "settingBtn" : r"Img\iconVsCode\settingBtn.png",
-    "xDeleteRed" : r"Img\dragonCity\xDeleteRed.png",
     "teeraHabitat" : r"Img\dragonCity\teeraHabitat.png",
     "teeraDragonInHabitat" : r"Img\dragonCity\teeraDragonInHabitat.png",
-    "placeEgg" : r"Img\dragonCity\placeEgg.png",
     "getEgg" : r"Img\dragonCity\getEgg.png",
-    "goldStore" : r"Img\dragonCity\goldStore.png",
-    "teeraDragon" : r"Img\dragonCity\teeraDragon.png",
-    "buyTeeraEgg" : r"Img\dragonCity\buyTeeraEgg.png",
     
 }
 
+hardPath = {
+    "reBreed" :     (937, 686),
+    "breed" :       (670, 596),
+    "xDeleteRed" :  (1290, 77),
+    "reGrow" :      (687, 700),
+    "sellEgg" :     (943, 552),
+    "sellEgg2" :    (783, 559),
+    "sellDragon" :  (1170, 711),
+    "sellDragon2" : (778, 543),
+    "goldStore" :   (872, 728),
+    "buyTeeraEgg" : (204, 605),
+    "placeEgg" :    (750, 547),
+
+}
 auto.PAUSE = 1
 
 def find(objParam, stack):
@@ -42,9 +38,9 @@ def find(objParam, stack):
         objectPos = auto.locateCenterOnScreen(Path[objParam], confidence=0.7)
         return objectPos
     except auto.ImageNotFoundException:
-        if stack < 4:    
+        if stack < 3:    
             print("{} img not found".format(objParam))
-            sleep(0.5)
+            sleep(1)
             find(objParam, stack+1)
         else:
             return False
@@ -59,28 +55,36 @@ def action(object, duration):
     objectPos = find("{}".format(object), 0)
     auto.moveTo(objectPos, duration=duration)
     auto.click()
-    
+    return objectPos
+
+def shortAction(object, duration):
+    auto.moveTo(hardPath["{}".format(object)], duration=duration)    
+    auto.click()
+
+def againAction(position, duration):
+    auto.moveTo(position, duration=duration)
+    auto.click()
 class dragonTools:
     def breedingTool(numOfLoops, myText, myTitle):
         myPrompt(numOfLoops, myText, myTitle)
-        action("breedMountainTree", 0.5)
-        action("reBreed", 0.5)
-        action("breed", 0.5)
-        action("xDeleteRed", 0.5)
+        bMTreeAgain = action("breedMountainTree", 0.5)
+        shortAction("reBreed", 0.5)
+        shortAction("breed", 0.5)
+        shortAction("xDeleteRed", 0.5)
         action("hatchMountain", 0.5)     
         action("hatchEgg", 0.5)
-        action("sellDragon", 0.5)
-        action("sellEgg", 0.5)
-        sleep(1)
-        action("breedMountainTree", 0.5)
+        shortAction("sellEgg", 0.5)
+        shortAction("sellEgg2", 0.5)
+        sleep(2)
+        againAction(bMTreeAgain, 0.5)
       
         return    
         
     def collectFoodTool(numOfLoops, myText, myTitle):
         myPrompt(numOfLoops, myText, myTitle)
         action("foodHouse", 0.5)
-        action("reGrow", 0.5)
-        sleep(30)
+        shortAction("reGrow", 0.5)
+        sleep(31)
         auto.PAUSE = 0
         foodIconPos = True
         
@@ -96,32 +100,31 @@ class dragonTools:
         for _ in range(int(quantity)):
             action("hatchMountain", 0.5)
             action("hatchEgg", 0.5)
-            action("placeEgg", 0.5)
+            shortAction("placeEgg", 0.5)
             action("teeraHabitat", 0.5)
             action("teeraDragonInHabitat", 0.5)
-            action("sellEgg", 0.5)
-            action("sellEgg", 0.5)
+            shortAction("sellDragon", 0.5)
+            shortAction("sellDragon2", 0.5)
         for _ in range(int(quantity)):
             action("hatchMountain", 0.5)
             action("getEgg", 0.5)
-            action("goldStore", 0.5)
-            action("teeraDragon", 0.5)
-            action("buyTeeraEgg", 0.5)
-        sleep(12)    
+            shortAction("goldStore", 0.5)
+            shortAction("buyTeeraEgg", 0.5)
+        sleep(11)    
 
     def breedHatchTool(numOfLoops, myText, myTitle):
         myPrompt(numOfLoops, myText, myTitle)
         action("breedMountainTree", 0.5)
-        action("reBreed", 0.5)
-        action("breed", 0.5)
-        action("xDeleteRed", 0.5)
+        shortAction("reBreed", 0.5)
+        shortAction("breed", 0.5)
+        shortAction("xDeleteRed", 0.5)
         action("hatchMountain", 0.5)     
         action("hatchEgg", 0.5)
-        action("placeEgg", 0.5)
+        shortAction("placeEgg", 0.5)
         action("teeraHabitat", 0.5)
         action("teeraDragonInHabitat", 0.5)
-        action("sellEgg", 0.5)
-        action("sellEgg", 0.5)
+        shortAction("sellDragon", 0.5)
+        shortAction("sellDragon2", 0.5)
         action("breedMountainTree", 0.5)
         sleep(3)        
         return
