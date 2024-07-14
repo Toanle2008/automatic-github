@@ -41,7 +41,7 @@ def find(objParam, stack):
         return objectPos
     except auto.ImageNotFoundException:
         if stack < 3:    
-            print("sorry Master. I can't find {} x {}".format(objParam, num))
+            print("~ Sorry Master. I can't find {} x {} ~ ".format(objParam, num))
             num += 1
             sleep(1)
             find(objParam, stack+1)
@@ -75,13 +75,26 @@ class dragonTools:
         shortAction("reBreed", 0.5)
         shortAction("breed", 0.5)
         shortAction("xDeleteRed", 0.5)
+        decide = (quantity == "2")
+        if decide:
+            bMountain = action("breedMountain", 0.5)
+            shortAction("reBreed", 0.5)
+            shortAction("breed", 0.5)
+            shortAction("xDeleteRed", 0.5)
+        sleep(1)
         action("hatchMountain", 0.5)     
         action("hatchEgg", 0.5)
         shortAction("sellEgg", 0.5)
         shortAction("sellEgg2", 0.5)
-        sleep(2)
+        if decide:
+            action("hatchEgg", 0.5)
+            shortAction("sellEgg", 0.5)
+            shortAction("sellEgg2", 0.5)
+        sleep(1)
         againAction(bMTreeAgain, 0.5)
-      
+        if decide:
+            againAction(bMountain, 0.5)
+            
         return    
         
     def collectFoodTool(numOfLoops, myText, myTitle):
@@ -104,7 +117,7 @@ class dragonTools:
         for _ in range(50):
             if find("reGrow", 0):
                 shortAction("reGrow", 0.5)
-                sleep(30)
+                sleep(29)
                 collectFood(0)    
             else:
                 break
@@ -121,12 +134,17 @@ class dragonTools:
             action("teeraDragonInHabitat", 0.5)
             shortAction("sellDragon", 0.5)
             shortAction("sellDragon2", 0.5)
-        for _ in range(int(quantity)):
-            action("hatchMountain", 0.5)
+
+        decide = (quantity == "2")
+        action("hatchMountain", 0.5)
+        action("getEgg", 0.5)
+        shortAction("goldStore", 0.5)
+        shortAction("buyTeeraEgg", 0.5)
+        if decide:
             action("getEgg", 0.5)
             shortAction("goldStore", 0.5)
             shortAction("buyTeeraEgg", 0.5)
-        sleep(11)    
+        sleep(13)    
 
     def breedHatchTool(numOfLoops, myText, myTitle):
         myPrompt(numOfLoops, myText, myTitle)
@@ -134,6 +152,12 @@ class dragonTools:
         shortAction("reBreed", 0.5)
         shortAction("breed", 0.5)
         shortAction("xDeleteRed", 0.5)
+        decide = (quantity == "2")
+        if decide:
+            action("breedMountain", 0.5)
+            shortAction("reBreed", 0.5)
+            shortAction("breed", 0.5)
+            shortAction("xDeleteRed", 0.5)
         action("hatchMountain", 0.5)     
         action("hatchEgg", 0.5)
         shortAction("placeEgg", 0.5)
@@ -141,8 +165,20 @@ class dragonTools:
         action("teeraDragonInHabitat", 0.5)
         shortAction("sellDragon", 0.5)
         shortAction("sellDragon2", 0.5)
+        if decide:
+            action("hatchMountain", 0.5)     
+            action("hatchEgg", 0.5)
+            shortAction("placeEgg", 0.5)
+            action("teeraHabitat", 0.5)
+            action("teeraDragonInHabitat", 0.5)
+            shortAction("sellDragon", 0.5)
+            shortAction("sellDragon2", 0.5)
+            
         action("breedMountainTree", 0.5)
-        sleep(3)        
+        if decide:
+            action("breedMountain", 0.5)    
+            
+        sleep(2)        
         return
 
 print(
@@ -171,12 +207,12 @@ def run():
                 dragonTools.collectFoodTool(numOfLoops, "Enter to start...", "COLLECT FOOD TOOL")
         case 2:
             for numOfLoops in range(50):
-                dragonTools.breedingTool(numOfLoops, "Enter to start...", "BREEDING TOOL")
+                dragonTools.breedingTool(numOfLoops, "Enter the num of Eggs to start...", "BREEDING TOOL")
         case 3:
             for numOfLoops in range(50):
                 dragonTools.hatchEggTool(numOfLoops, "Enter the num of Eggs to start...", "HATCHING TOOL")    
         case 4:
             for numOfLoops in range(50):
-                dragonTools.breedHatchTool(numOfLoops, "Enter to start...", "BREEDING AND HATCHING TOOL")  
+                dragonTools.breedHatchTool(numOfLoops, "Enter the num of Eggs to start...", "BREEDING AND HATCHING TOOL")  
      
 run()
